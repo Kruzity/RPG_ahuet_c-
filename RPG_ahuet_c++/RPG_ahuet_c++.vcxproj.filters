@@ -1,2 +1,63 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" />
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Core">
+      <UniqueIdentifier>{b9199e28-1251-47fd-af0f-57437b903f9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{6ab11e89-0181-48f1-82c9-1fa2707c6f36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main">
+      <UniqueIdentifier>{5ae1f964-179c-4233-871b-312a08ae987a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Libs">
+      <UniqueIdentifier>{1db2b25c-593f-406a-8f9f-cffd8b119fa8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Entities">
+      <UniqueIdentifier>{4120d5f3-26f3-446d-996c-920f056072b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\Menu">
+      <UniqueIdentifier>{9143ca10-d253-4621-b74c-9e72f467a9d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Entities\Boss">
+      <UniqueIdentifier>{247bb387-777f-4804-aabd-40a0c7e5b1a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Entities\Hero">
+      <UniqueIdentifier>{b5ca7847-6068-4dcf-9d36-a57f2d275602}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Entities\Monster">
+      <UniqueIdentifier>{ed848ffa-c889-486e-8d6a-b31f542dd4f8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Main\main.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Core\Entities\Boss\Boss.cpp">
+      <Filter>Core\Entities\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Core\Entities\Hero\Hero.cpp">
+      <Filter>Core\Entities\Hero</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Core\Entities\Monster\Monster.cpp">
+      <Filter>Core\Entities\Monster</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Core\Libs\Libs.h">
+      <Filter>Core\Libs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UI\Menu\Menu.h">
+      <Filter>UI\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Core\Entities\Boss\Boss.h">
+      <Filter>Core\Entities\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Core\Entities\Hero\Hero.h">
+      <Filter>Core\Entities\Hero</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Core\Entities\Monster\Monster.h">
+      <Filter>Core\Entities\Monster</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
