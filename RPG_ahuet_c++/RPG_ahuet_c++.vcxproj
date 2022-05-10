@@ -140,12 +140,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Core\Entities\Boss\Boss.cpp" />
+    <ClCompile Include="..\Core\Entities\Field\Field.cpp" />
     <ClCompile Include="..\Core\Entities\Hero\Hero.cpp" />
     <ClCompile Include="..\Core\Entities\Monster\Monster.cpp" />
     <ClCompile Include="..\Main\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Core\Entities\Boss\Boss.h" />
+    <ClInclude Include="..\Core\Entities\Field\Field.h" />
     <ClInclude Include="..\Core\Entities\Hero\Hero.h" />
     <ClInclude Include="..\Core\Entities\Monster\Monster.h" />
     <ClInclude Include="..\Core\Libs\Libs.h" />
