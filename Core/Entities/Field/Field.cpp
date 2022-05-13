@@ -2,16 +2,31 @@
 
 void Field::fillField()
 {
-	string all(fieldSize, border), part(fieldSize - 2, emptySpace);
+	string all, part;
+	for (int i = 0; i <= fieldSize * 2; i++)
+	{
+		all += border;
+
+		if (i == 0 || i == fieldSize * 2) part += border;
+		else
+		{
+			if(i%2==0)
+				part += emptySpace;
+			else
+				part += ' ';
+		}
+	}
 	for (int i = 0; i < fieldSize; i++)
 	{
 		if (i == 0 || i == fieldSize - 1)
-			field[i] = all;
+		{
+			field += all;
+			field += '\n';
+		}
 		else
 		{
-			field[i] += '#';
-			field[i] += part;
-			field[i] += '#';
+			field += part;
+			field += '\n';
 		}
 	}
 
@@ -19,28 +34,17 @@ void Field::fillField()
 
 void Field::printField()
 {
-	for (int i = 0; i < fieldSize; i++)
-	{
-		for (int j = 0; j < fieldSize; j++)
-			cout << field[i][j] << " ";
-		cout << endl;
-	}
+	cout << field;
 }
 
-void Field::makeField()
+void Field::printFieldWHero(Hero arg)
 {
-	field = new string[fieldSize];
+	for (int i = 0; i <= fieldSize * 2; i++)
+	{
+		if (field[i] == arg.texture) field[i] = emptySpace;
+	}
+	field[((fieldSize*2+3)*(arg.y_pos)+(arg.x_pos+2))-1] = arg.texture;
+	cout << field;
 }
 
-void Field::printVisiebleFieldsPart(Hero person)
-{
-	if (person.y_pos - visiebleFieldSize >= 0 && person.y_pos + visiebleFieldSize <= fieldSize && person.x_pos - visiebleFieldSize >= 0 && person.x_pos + visiebleFieldSize <= fieldSize)
-	{
-		for (int i = person.y_pos - visiebleFieldSize; i <= person.y_pos + visiebleFieldSize; i++)
-		{
-			for (int j = person.x_pos - visiebleFieldSize; j <= person.x_pos + visiebleFieldSize; j++)
-				cout << field[i][j] << " ";
-			cout << endl;
-		}
-	}
-}
+

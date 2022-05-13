@@ -9,19 +9,23 @@ void menu()
 	Field mainField;
 	Hero mainHero;
 	//field settings
-	mainField.fieldSize = 30;
+	mainField.fieldSize = 26;
 	mainField.visiebleFieldSize = 5;
 	mainField.border = '#';
 	mainField.emptySpace = '.';
 
 	//hero settings
-	mainHero.x_pos = 5;
-	mainHero.y_pos = 5;
+	mainHero.x_pos = 3;
+	mainHero.y_pos = 2;
+	mainHero.texture = 'X';
 
 	//field actions
-	mainField.makeField();
 	mainField.fillField();
-	mainField.printField();
-	for(int i=0;i<5;i++)
-		mainHero.fight();
+	do
+	{
+		//system("cls");
+		mainField.printFieldWHero(mainHero);
+		if (_kbhit()) mainHero.action(mainField.fieldSize);
+		Sleep(500);
+	} while (true);
 }

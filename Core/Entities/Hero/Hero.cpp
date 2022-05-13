@@ -1,30 +1,58 @@
 #include"Hero.h"
 
-void Hero::move(int fieldSize)
+void Hero::action(int fieldSize)
 {
 	char a = _getch();
-	if (a == 'w'&& y_pos - 1 > 1)
+	switch ((int)a)
 	{
-		y_pos--;
-		cout << y_pos << " " << x_pos << endl;
+		case(72):
+		{
+			//up
+			if (y_pos - 1 > 0) y_pos-=1;
+			break;
+		}
+		case(75):
+		{
+			//left
+			if (x_pos - 2 > 0) x_pos-=2;
+			break;
+		}
+		case(77):
+		{
+			//right
+			if (x_pos + 2 < fieldSize*2) x_pos+=2;
+			break;
+		}
+		case(80):
+		{
+			//down
+			if (y_pos + 1 < fieldSize*2) y_pos+=1;
+			break;
+		}
+		case(119):
+		{
+			//w
+
+			break;
+		}
+		case(97):
+		{
+			//a
+			break;
+		}
+		case(115):
+		{
+			//s
+			break;
+		}
+		case(100):
+		{
+			//d
+			break;
+		}
+		default:
+			cout << (int)a << endl;
 	}
-	else if (a == 's' && y_pos + 1 < fieldSize)
-	{
-		y_pos++;
-		cout << y_pos << " " << x_pos << endl;
-	}
-	else if (a == 'a' && x_pos - 1 >1)
-	{
-		x_pos--;
-		cout << y_pos << " " << x_pos << endl;
-	}
-	else if (a == 'd' && x_pos +1 <fieldSize)
-	{
-		x_pos++;
-		cout << y_pos << " " << x_pos << endl;
-	}
-	else cout << "Unknown letter" << endl;
-	
 }
 
 void Hero::fight()
