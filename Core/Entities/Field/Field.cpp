@@ -3,18 +3,12 @@
 void Field::fillField()
 {
 	string all, part;
-	for (int i = 0; i <= fieldSize * 2; i++)
+	for (int i = 0; i < fieldSize; i++)
 	{
 		all += border;
 
-		if (i == 0 || i == fieldSize * 2) part += border;
-		else
-		{
-			if(i%2==0)
-				part += emptySpace;
-			else
-				part += ' ';
-		}
+		if (i == 0 || i == fieldSize-1) part += border;
+		else part += emptySpace;
 	}
 	for (int i = 0; i < fieldSize; i++)
 	{

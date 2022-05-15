@@ -9,10 +9,10 @@ void menu()
 	Field mainField;
 	Hero mainHero;
 	//field settings
-	mainField.fieldSize = 26;
+	mainField.fieldSize = 25;
 	mainField.visiebleFieldSize = 5;
-	mainField.border = '#';
-	mainField.emptySpace = '.';
+	mainField.border = 178;
+	mainField.emptySpace = 176;
 
 	//hero settings
 	mainHero.x_pos = 3;
