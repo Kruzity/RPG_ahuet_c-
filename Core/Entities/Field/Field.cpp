@@ -2,26 +2,34 @@
 
 void Field::fillField()
 {
-	string all, part;
-	for (int i = 0; i < fieldSize; i++)
+	string upPart, downPart, middlePart;
+	for (int i = 0; i < fieldSize*2; i++)
 	{
-		all += border;
-
-		if (i == 0 || i == fieldSize-1) part += border;
-		else part += emptySpace;
-	}
-	for (int i = 0; i < fieldSize; i++)
-	{
-		if (i == 0 || i == fieldSize - 1)
+		if (i == 0)
 		{
-			field += all;
-			field += '\n';
+			upPart += 201;
+			downPart += 200;
+			middlePart += 186;
+		}
+		else if (i == fieldSize * 2 - 1)
+		{
+			upPart += 187;
+			downPart += 188;
+			middlePart += 186;
 		}
 		else
 		{
-			field += part;
-			field += '\n';
+			upPart += 205;
+			downPart += 205;
+			middlePart += ' ';
 		}
+	}
+	for (int i = 0; i < fieldSize; i++)
+	{
+		if (i == 0) field += upPart;
+		else if (i == fieldSize - 1) field += downPart;
+		else field += middlePart;
+		field += '\n';
 	}
 
 }
@@ -31,14 +39,14 @@ void Field::printField()
 	cout << field;
 }
 
-void Field::printFieldWHero(Hero arg)
-{
-	for (int i = 0; i <= fieldSize * 2; i++)
-	{
-		if (field[i] == arg.texture) field[i] = emptySpace;
-	}
-	field[((fieldSize*2+3)*(arg.y_pos)+(arg.x_pos+2))-1] = arg.texture;
-	cout << field;
-}
+//void Field::printFieldWHero(Hero arg)
+//{
+//	for (int i = 0; i < field.length(); i++)
+//	{
+//		if (field[i] == arg.texture) field[i] = emptySpace;
+//	}
+//	field[((fieldSize*2+1)*arg.y_pos)+arg.x_pos] = arg.texture;
+//	cout << field;
+//}
 
 

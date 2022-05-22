@@ -2,6 +2,7 @@
 #include"../../Core/Entities/Boss/Boss.h"
 #include"../../Core/Entities/Monster/Monster.h"
 #include"../../Core/Entities/Field/Field.h"
+#include"../../Core/Entities/Hero/Hero.h"
 
 
 void menu()
@@ -9,10 +10,9 @@ void menu()
 	Field mainField;
 	Hero mainHero;
 	//field settings
-	mainField.fieldSize = 25;
+	mainField.fieldSize = 10;
 	mainField.visiebleFieldSize = 5;
-	mainField.border = 178;
-	mainField.emptySpace = 176;
+	mainField.emptySpace = ' ';
 
 	//hero settings
 	mainHero.x_pos = 3;
@@ -21,11 +21,12 @@ void menu()
 
 	//field actions
 	mainField.fillField();
+	mainField.field[((mainField.fieldSize * 2 + 1) * mainHero.y_pos) + mainHero.x_pos] = mainHero.texture;
 	do
 	{
-		//system("cls");
-		mainField.printFieldWHero(mainHero);
-		if (_kbhit()) mainHero.action(mainField.fieldSize);
-		Sleep(500);
+		system("cls");
+		mainField.printField();
+		mainHero.action(mainField.field,mainField.fieldSize);
+		
 	} while (true);
 }

@@ -1,32 +1,50 @@
 #include"Hero.h"
 
-void Hero::action(int fieldSize)
+void Hero::action(string& field, int fieldSize)
 {
 	char a = _getch();
+	if (a == -32)
+		a = _getch();
 	switch ((int)a)
 	{
 		case(72):
 		{
 			//up
-			if (y_pos - 1 > 0) y_pos-=1;
+			if (y_pos - 1 > 0)
+			{
+				swap(field[((fieldSize * 2 + 1) * y_pos) + x_pos], field[((fieldSize * 2 + 1) * (y_pos-1)) + x_pos]);
+				y_pos--;
+			}
 			break;
 		}
 		case(75):
 		{
 			//left
-			if (x_pos - 2 > 0) x_pos-=2;
+			if (x_pos - 1 > 0)
+			{
+				swap(field[((fieldSize * 2 + 1) * y_pos) + x_pos], field[((fieldSize * 2 + 1) * y_pos) + x_pos-1]);
+				x_pos--;
+			}
 			break;
 		}
 		case(77):
 		{
 			//right
-			if (x_pos + 2 < fieldSize*2) x_pos+=2;
+			if (x_pos + 1 < fieldSize * 2 - 1)
+			{
+				swap(field[((fieldSize * 2 + 1) * y_pos) + x_pos], field[((fieldSize * 2 + 1) * y_pos) + x_pos+1]);
+				x_pos++;
+			}
 			break;
 		}
 		case(80):
 		{
 			//down
-			if (y_pos + 1 < fieldSize*2) y_pos+=1;
+			if (y_pos + 1 < fieldSize-1)
+			{
+				swap(field[((fieldSize * 2 + 1) * y_pos) + x_pos], field[((fieldSize * 2 + 1) * (y_pos + 1)) + x_pos]);
+				y_pos++;
+			}
 			break;
 		}
 		case(119):
@@ -51,7 +69,10 @@ void Hero::action(int fieldSize)
 			break;
 		}
 		default:
+		{
 			cout << (int)a << endl;
+			Sleep(300);
+		}
 	}
 }
 

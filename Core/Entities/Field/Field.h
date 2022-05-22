@@ -1,5 +1,4 @@
 #include"../../Libs/Libs.h"
-#include"../Hero/Hero.h"
 
 struct Field
 {
@@ -12,5 +11,5 @@ struct Field
 
 	void fillField();
 	void printField();
-	void printFieldWHero(Hero arg);
+	//void printFieldWHero(Hero arg);
 };

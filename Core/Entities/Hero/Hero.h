@@ -6,6 +6,6 @@ struct Hero
 	uint32_t y_pos;
 	char texture;
 
-	void action(int fieldSize);
+	void action(string& field, int fieldSize);
 	void fight();
 };
