@@ -10,6 +10,7 @@ struct Hero
 
 	char texture;
 
-	void action(string& field, int fieldSize);
+	void action(string& field, int fieldSize, char move);
 	void fight();
+	bool nearEnemy(string field, int fieldSize, char enemyTexture);
 };

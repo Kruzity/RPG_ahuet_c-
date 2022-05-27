@@ -5,6 +5,7 @@ struct Monster
 	uint32_t x_pos;
 	uint32_t y_pos;
 	
+	string monsterType;
 	uint32_t attack;
 	uint32_t defence;
 

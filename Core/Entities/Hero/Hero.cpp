@@ -1,11 +1,10 @@
 #include"Hero.h"
 
-void Hero::action(string& field, int fieldSize)
+void Hero::action(string& field, int fieldSize, char move)
 {
-	char a = _getch();
-	if (a == -32)
-		a = _getch();
-	switch ((int)a)
+	if (move == -32)
+		move = _getch();
+	switch ((int)move)
 	{
 		case(72):
 		{
@@ -70,7 +69,7 @@ void Hero::action(string& field, int fieldSize)
 		}
 		default:
 		{
-			cout << (int)a << endl;
+			cout << (int)move << endl;
 			Sleep(300);
 		}
 	}
@@ -79,8 +78,8 @@ void Hero::action(string& field, int fieldSize)
 void Hero::fight()
 {
 	system("cls");
-	fstream fightScene;
-	fightScene.open("C:\\fight.txt", ios::in);
+	/*fstream fightScene;   Прикол с визуалом, но я пока не понимаю как сделать
+	fightScene.open("\\1heroAttack.txt", ios::in);
 	if (fightScene.is_open())
 	{
 		int i = 0;
@@ -91,11 +90,27 @@ void Hero::fight()
 			i++;
 			if (i == 7)
 			{
-				Sleep(300);
+				cout << "---------------------------------" << endl;;
+				Sleep(100);
 				i = 0;
 				system("cls");
 			}
 		}
 		fightScene.close();
-	}
+	}*/
+
+}
+
+bool Hero::nearEnemy(string field,int fieldSize,char enemyTexture)
+{
+	if (field[((fieldSize * 2 + 1) * (y_pos - 1)) + x_pos - 1] == enemyTexture) return true;
+	else if (field[((fieldSize * 2 + 1) * (y_pos - 1)) + x_pos + 0] == enemyTexture) return true;
+	else if (field[((fieldSize * 2 + 1) * (y_pos - 1)) + x_pos + 1] == enemyTexture) return true;
+	else if (field[((fieldSize * 2 + 1) * (y_pos + 0)) + x_pos + 1] == enemyTexture) return true;
+	else if (field[((fieldSize * 2 + 1) * (y_pos + 1)) + x_pos + 1] == enemyTexture) return true;
+	else if (field[((fieldSize * 2 + 1) * (y_pos + 1)) + x_pos + 0] == enemyTexture) return true;
+	else if (field[((fieldSize * 2 + 1) * (y_pos + 1)) + x_pos - 1] == enemyTexture) return true;
+	else if (field[((fieldSize * 2 + 1) * (y_pos + 0)) + x_pos - 1] == enemyTexture) return true;
+	
+	return false;
 }
