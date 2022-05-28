@@ -75,7 +75,7 @@ void Hero::action(string& field, int fieldSize, char move)
 	}
 }
 
-void Hero::fight()
+void Hero::fight(Monster& monster)
 {
 	system("cls");
 	/*fstream fightScene;   Прикол с визуалом, но я пока не понимаю как сделать
@@ -99,18 +99,27 @@ void Hero::fight()
 		fightScene.close();
 	}*/
 
+	do
+	{
+		system("cls");
+		cout << name << setw(20 + monster.monsterType.length()) << right << monster.monsterType << endl;
+		for (int i = 0; i < name.length(); i++) cout << '-';
+		for (int i = 0; i < 20; i++) cout << ' ';
+		for (int i = 0; i < monster.monsterType.length(); i++) cout << '-';
+		cout << endl;
+		cout << "Your HP: " << hp << setw(30) << right << " Monster HP : " << monster.hp << endl;
+		cout << "Your Attack: " << attack << setw(30) << right << " Monster Attack : " << monster.attack << endl;
+		cout << "Your Def: " << defence << setw(30) << right << " Monster Def : " << monster.defence << endl;
+		
+		cout << "____________________________________________________" << endl;
+	} while (true);
 }
 
-bool Hero::nearEnemy(string field,int fieldSize,char enemyTexture)
+bool Hero::nearEnemy(string field,int fieldSize,char enemyTexture, int* fn, int* sn)
 {
-	if (field[((fieldSize * 2 + 1) * (y_pos - 1)) + x_pos - 1] == enemyTexture) return true;
-	else if (field[((fieldSize * 2 + 1) * (y_pos - 1)) + x_pos + 0] == enemyTexture) return true;
-	else if (field[((fieldSize * 2 + 1) * (y_pos - 1)) + x_pos + 1] == enemyTexture) return true;
-	else if (field[((fieldSize * 2 + 1) * (y_pos + 0)) + x_pos + 1] == enemyTexture) return true;
-	else if (field[((fieldSize * 2 + 1) * (y_pos + 1)) + x_pos + 1] == enemyTexture) return true;
-	else if (field[((fieldSize * 2 + 1) * (y_pos + 1)) + x_pos + 0] == enemyTexture) return true;
-	else if (field[((fieldSize * 2 + 1) * (y_pos + 1)) + x_pos - 1] == enemyTexture) return true;
-	else if (field[((fieldSize * 2 + 1) * (y_pos + 0)) + x_pos - 1] == enemyTexture) return true;
-	
+	for (int i = 0; i < 8; i++)
+	{
+		if (field[((fieldSize * 2 + 1) * (y_pos + fn[i])) + x_pos + sn[i]] == enemyTexture) return true;
+	}
 	return false;
 }

@@ -1,6 +1,5 @@
 #include"../../Core/Libs/Libs.h"
 #include"../../Core/Entities/Boss/Boss.h"
-#include"../../Core/Entities/Monster/Monster.h"
 #include"../../Core/Entities/Field/Field.h"
 #include"../../Core/Entities/Hero/Hero.h"
 
@@ -74,6 +73,9 @@ void menu()
 	srand(time(NULL));
 	Field mainField;
 	Hero mainHero;
+	int fn[8]{-1,-1,-1,0,1,1,1,0}, sn[8]{-1,0,1,1,1,0,-1,-1};
+
+
 	//field settings
 	mainField.fieldSize = 20;
 	mainField.visiebleFieldSize = 5;
@@ -87,6 +89,10 @@ void menu()
 	mainHero.x_pos = 3;
 	mainHero.y_pos = 2;
 	mainHero.texture = 254;
+	mainHero.hp = 5;
+	mainHero.attack = 1;
+	mainHero.defence = 2;
+	mainHero.name = "Kruzity";
 
 	//field actions
 	mainField.fillField();
@@ -97,6 +103,7 @@ void menu()
 	{
 		monsters[i].attack = rand() % 5;
 		monsters[i].defence = rand() % 5;
+		monsters[i].hp = rand() % 5;
 		monsters[i].randPos(mainField.field, mainField.fieldSize);
 		monsters[i].monsterType = monsterTypes[rand() % 5];
 	}
@@ -110,10 +117,9 @@ void menu()
 	{
 		system("cls");
 		mainField.printField();
-		if (mainHero.nearEnemy(mainField.field, mainField.fieldSize, monsters[0].texture))
+		if (mainHero.nearEnemy(mainField.field, mainField.fieldSize, monsters[0].texture, fn, sn))
 		{
-			cout << "Near Monster!!!";
-			Sleep(400);
+			cout << "Near Monster!!!\nPress F to fight" << endl;
 		}
 		keyAction = _getch();
 		switch ((int)keyAction)
@@ -125,7 +131,24 @@ void menu()
 			}
 			case 102:
 			{
-				
+				if (mainHero.nearEnemy(mainField.field, mainField.fieldSize, monsters[0].texture, fn, sn))
+				{
+					for (int i = 0; i < 8; i++)
+					{
+						if (mainField.field[((mainField.fieldSize * 2 + 1) * (mainHero.y_pos + fn[i])) + mainHero.x_pos + sn[i]] == monsters[0].texture)
+						{
+							for (int j = 0; j < amountOfMonsters; j++)
+							{
+								if (monsters[j].y_pos == mainHero.y_pos + fn[i] && monsters[j].x_pos == mainHero.x_pos + sn[i])
+								{
+									mainHero.fight(monsters[j]);
+									break;
+								}
+							}
+							break;
+						}
+					}
+				}
 				break;
 			}
 			default:
