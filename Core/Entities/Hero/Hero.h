@@ -14,6 +14,6 @@ struct Hero
 	char texture;
 
 	void action(string& field, int fieldSize, char move);
-	void fight(Monster& monster);
+	int fight(Monster& monster);
 	bool nearEnemy(string field, int fieldSize, char enemyTexture, int* fn, int* sn);
 };

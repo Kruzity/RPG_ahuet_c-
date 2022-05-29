@@ -113,10 +113,19 @@ void menu()
 	char keyAction;
 	//keyAction = _getch();
 	//cout << (int)keyAction;
+	int resultOfFight=0;
 	do
 	{
 		system("cls");
 		mainField.printField();
+		if (resultOfFight == 1)
+		{
+			cout << " ____ ____ ____ _________ ____ ____ ____" << endl;
+			cout << "||Y |||o |||u |||       |||D |||I |||E ||" << endl;
+			cout << "||__|||__|||__|||_______|||__|||__|||__||" << endl;
+			cout << "|/__\\|/__\\|/__\\|/_______\\|/__\\|/__\\|/__\\|" << endl;
+			exit(0);
+		}
 		if (mainHero.nearEnemy(mainField.field, mainField.fieldSize, monsters[0].texture, fn, sn))
 		{
 			cout << "Near Monster!!!\nPress F to fight" << endl;
@@ -141,7 +150,7 @@ void menu()
 							{
 								if (monsters[j].y_pos == mainHero.y_pos + fn[i] && monsters[j].x_pos == mainHero.x_pos + sn[i])
 								{
-									mainHero.fight(monsters[j]);
+									resultOfFight = mainHero.fight(monsters[j]);
 									break;
 								}
 							}

@@ -75,7 +75,7 @@ void Hero::action(string& field, int fieldSize, char move)
 	}
 }
 
-void Hero::fight(Monster& monster)
+int Hero::fight(Monster& monster)
 {
 	system("cls");
 	/*fstream fightScene;   Прикол с визуалом, но я пока не понимаю как сделать
@@ -98,6 +98,8 @@ void Hero::fight(Monster& monster)
 		}
 		fightScene.close();
 	}*/
+	int endFight = 0;
+	char key;
 
 	do
 	{
@@ -112,7 +114,19 @@ void Hero::fight(Monster& monster)
 		cout << "Your Def: " << defence << setw(30) << right << " Monster Def : " << monster.defence << endl;
 		
 		cout << "____________________________________________________" << endl;
-	} while (true);
+		cout << "1 - Attack" << endl;
+		cout << "2 - Defence" << endl;
+		
+		key = _getch();
+		if (key == 49) hp = 0;
+		else if (key == 50) monster.hp = 0;
+
+
+		if (hp <= 0) endFight = 1;
+		else if (monster.hp <= 0) endFight = 2;
+	} while (endFight == 0);
+
+	return endFight;
 }
 
 bool Hero::nearEnemy(string field,int fieldSize,char enemyTexture, int* fn, int* sn)
