@@ -1,5 +1,10 @@
 #include"Field.h"
 
+void Field::clearField()
+{
+	field.clear();
+}
+
 void Field::fillField()
 {
 	string upPart, downPart, middlePart;

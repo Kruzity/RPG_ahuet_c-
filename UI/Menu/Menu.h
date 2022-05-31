@@ -68,6 +68,22 @@ void escMenu()
 	}
 }
 
+Monster* deleteMonster(Monster* arr, int& size, int element)
+{
+	if (size != 1)
+	{
+		Monster* new_arr = new Monster[size - 1];
+		for (int i = 0; i < size; i++)
+		{
+			if (i < element) new_arr[i] = arr[i];
+			else if (i > element) new_arr[i - 1] = arr[i];
+		}
+		size--;
+		return new_arr;
+	}
+	else return nullptr;
+}
+
 void menu()
 {
 	srand(time(NULL));
@@ -80,19 +96,22 @@ void menu()
 	mainField.fieldSize = 20;
 	mainField.visiebleFieldSize = 5;
 	mainField.emptySpace = ' ';
+	int killedMonsters=0;
 
 	//monsters settings
 	string monsterTypes[]{ "Kringe", "Pinkle", "Shrab", "Solf", "Palanda" };
-	int amountOfMonsters = 5;
+	int amountOfMonsters = 1;
 	Monster* monsters = new Monster[amountOfMonsters];
 	//hero settings
 	mainHero.x_pos = 3;
 	mainHero.y_pos = 2;
 	mainHero.texture = 254;
 	mainHero.hp = 5;
-	mainHero.attack = 1;
+	mainHero.attack = 2;
 	mainHero.defence = 2;
 	mainHero.name = "Kruzity";
+	mainHero.inventoryMaxSlots = 3;
+	mainHero.inventory = new string[mainHero.inventoryMaxSlots];
 
 	//field actions
 	mainField.fillField();
@@ -101,14 +120,13 @@ void menu()
 	
 	for (int i = 0; i < amountOfMonsters; i++)
 	{
-		monsters[i].attack = rand() % 5;
-		monsters[i].defence = rand() % 5;
-		monsters[i].hp = rand() % 5;
+		monsters[i].attack = rand() % 2+1;
+		monsters[i].defence = rand() % 2+1;
+		monsters[i].hp = rand() % 2+1;
 		monsters[i].randPos(mainField.field, mainField.fieldSize);
 		monsters[i].monsterType = monsterTypes[rand() % 5];
+		monsters[i].texture = 31;
 	}
-	for(int i=0;i<amountOfMonsters;i++)
-		mainField.field[((mainField.fieldSize * 2 + 1) * monsters[i].y_pos) + monsters[i].x_pos] = monsters[i].texture;
 	
 	char keyAction;
 	//keyAction = _getch();
@@ -117,7 +135,6 @@ void menu()
 	do
 	{
 		system("cls");
-		mainField.printField();
 		if (resultOfFight == 1)
 		{
 			cout << " ____ ____ ____ _________ ____ ____ ____" << endl;
@@ -126,6 +143,20 @@ void menu()
 			cout << "|/__\\|/__\\|/__\\|/_______\\|/__\\|/__\\|/__\\|" << endl;
 			exit(0);
 		}
+		if (killedMonsters == amountOfMonsters)
+		{
+			cout << " ____ ____ ____ _________ ____ ____ ____" << endl;
+			cout << "||Y |||o |||u |||       |||W |||i |||n ||" << endl;
+			cout << "||__|||__|||__|||_______|||__|||__|||__||" << endl;
+			cout << "|/__\\|/__\\|/__\\|/_______\\|/__\\|/__\\|/__\\ |" << endl;
+			exit(0);
+		}
+		mainField.clearField();
+		mainField.fillField();
+		mainField.field[((mainField.fieldSize * 2 + 1) * mainHero.y_pos) + mainHero.x_pos] = mainHero.texture;
+		for (int i = 0; i < amountOfMonsters; i++)
+			mainField.field[((mainField.fieldSize * 2 + 1) * monsters[i].y_pos) + monsters[i].x_pos] = monsters[i].texture;
+		mainField.printField();
 		if (mainHero.nearEnemy(mainField.field, mainField.fieldSize, monsters[0].texture, fn, sn))
 		{
 			cout << "Near Monster!!!\nPress F to fight" << endl;
@@ -151,6 +182,11 @@ void menu()
 								if (monsters[j].y_pos == mainHero.y_pos + fn[i] && monsters[j].x_pos == mainHero.x_pos + sn[i])
 								{
 									resultOfFight = mainHero.fight(monsters[j]);
+									if (resultOfFight == 2)
+									{
+										monsters = deleteMonster(monsters, amountOfMonsters, j);
+										killedMonsters++;
+									}
 									break;
 								}
 							}

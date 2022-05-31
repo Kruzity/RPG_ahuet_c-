@@ -6,11 +6,11 @@ struct Monster
 	uint32_t y_pos;
 	
 	string monsterType;
-	uint32_t hp;
-	uint32_t attack;
-	uint32_t defence;
+	int hp;
+	int attack;
+	int defence;
 
-	char texture = 31;
+	char texture;
 
 	void randPos(string field, int fieldSize);
 };

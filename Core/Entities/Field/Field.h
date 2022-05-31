@@ -11,5 +11,6 @@ struct Field
 
 	void fillField();
 	void printField();
+	void clearField();
 	//void printFieldWHero(Hero arg);
 };

@@ -11,7 +11,8 @@ void Hero::action(string& field, int fieldSize, char move)
 			//up
 			if (y_pos - 1 > 0)
 			{
-				swap(field[((fieldSize * 2 + 1) * y_pos) + x_pos], field[((fieldSize * 2 + 1) * (y_pos-1)) + x_pos]);
+				//swap(field[((fieldSize * 2 + 1) * y_pos) + x_pos], field[((fieldSize * 2 + 1) * (y_pos-1)) + x_pos]);
+				field[((fieldSize * 2 + 1) * y_pos) + x_pos] = ' ';
 				y_pos--;
 			}
 			break;
@@ -21,7 +22,8 @@ void Hero::action(string& field, int fieldSize, char move)
 			//left
 			if (x_pos - 1 > 0)
 			{
-				swap(field[((fieldSize * 2 + 1) * y_pos) + x_pos], field[((fieldSize * 2 + 1) * y_pos) + x_pos-1]);
+				//swap(field[((fieldSize * 2 + 1) * y_pos) + x_pos], field[((fieldSize * 2 + 1) * y_pos) + x_pos-1]);
+				field[((fieldSize * 2 + 1) * y_pos) + x_pos] = ' ';
 				x_pos--;
 			}
 			break;
@@ -31,7 +33,8 @@ void Hero::action(string& field, int fieldSize, char move)
 			//right
 			if (x_pos + 1 < fieldSize * 2 - 1)
 			{
-				swap(field[((fieldSize * 2 + 1) * y_pos) + x_pos], field[((fieldSize * 2 + 1) * y_pos) + x_pos+1]);
+				//swap(field[((fieldSize * 2 + 1) * y_pos) + x_pos], field[((fieldSize * 2 + 1) * y_pos) + x_pos+1]);
+				field[((fieldSize * 2 + 1) * y_pos) + x_pos] = ' ';
 				x_pos++;
 			}
 			break;
@@ -41,7 +44,8 @@ void Hero::action(string& field, int fieldSize, char move)
 			//down
 			if (y_pos + 1 < fieldSize-1)
 			{
-				swap(field[((fieldSize * 2 + 1) * y_pos) + x_pos], field[((fieldSize * 2 + 1) * (y_pos + 1)) + x_pos]);
+				//swap(field[((fieldSize * 2 + 1) * y_pos) + x_pos], field[((fieldSize * 2 + 1) * (y_pos + 1)) + x_pos]);
+				field[((fieldSize * 2 + 1) * y_pos) + x_pos] = ' ';
 				y_pos++;
 			}
 			break;
@@ -116,14 +120,110 @@ int Hero::fight(Monster& monster)
 		cout << "____________________________________________________" << endl;
 		cout << "1 - Attack" << endl;
 		cout << "2 - Defence" << endl;
+		cout << "3 - Inventory" << endl;
 		
 		key = _getch();
-		if (key == 49) hp = 0;
-		else if (key == 50) monster.hp = 0;
+		int a = rand() % 2 + 1;
+		int chanceForHeal = rand() % 100 + 1;
+		//1 - monster attack
+		//else - monster defend
+		if (key == 49)
+		{
+			if (a == 1)
+			{
+				defence -= monster.attack;
+				if (defence < 0)
+				{
+					hp += defence;
+					defence = 0;
+				}
+				monster.defence -= attack;
+				if (monster.defence < 0)
+				{
+					monster.hp += monster.defence;
+					monster.defence = 0;
+				}
+				cout << "\t--|You have attack|--" << endl;
+				cout << "\t---|and deal " << attack - monster.defence << " damage|---" << endl;
+				
+				cout << "\t--|Monster have attack|--" << endl;
+				cout << "\t---|and deal " << monster.attack -	defence << " damage|---" << endl;
+			}
+			else
+				cout << "\t--|Monster defeat attack|--";
+		}
+		else if (key == 50)
+		{
+			if (a == 1)
+			{
+				cout << "\t--|You have counterattack|--" << endl;
+				cout << "\t---|and deal " << attack * 2 - monster.defence << " damage|---" << endl;
+				monster.defence -= attack*2;
+				if (monster.defence < 0)
+				{
+					monster.hp += monster.defence;
+					monster.defence = 0;
+				}
+			}
+			else
+				cout << "\t\t |Monster defence too|";
+		}
+		else if (key == 51)
+		{
+			showInventory();
+			int k;
+			cout << "\nEnter choice:"; cin >> k;
+			cin.ignore();
+			if (k > 0 && k <= inventoryMaxSlots)
+			{
+				if (inventory[k - 1].empty())
+				{
+					cout << "Empty slot" << endl;
+				}
+				else
+				{
+					inventory[k - 1].clear();
+					cout << "\t-|Your hp has been restored for 2 point|-" << endl;
+					hp += 2;
+				}
+			}
+			if (a == 1)
+			{
+				defence -= monster.attack;
+				if (defence < 0)
+				{
+					hp += defence;
+					defence = 0;
+				}
+				cout << "\t--|Monster have attack|--" << endl;
+				cout << "\t---|and deal " << monster.attack - defence << " damage|---" << endl;
+			}
+		}
 
 
-		if (hp <= 0) endFight = 1;
-		else if (monster.hp <= 0) endFight = 2;
+		if (hp <= 0)
+		{
+			cout << "\n\n\t-|You DIED|-";
+			endFight = 1;
+		}
+		else if (monster.hp <= 0)
+		{
+			cout << "\n\n\t-|Monster DIED|-";
+			if (chanceForHeal >= 1)
+			{
+				cout << "\n\t-|Monster dropped Heal Potin|-";
+				for (int i = 0; i < inventoryMaxSlots; i++)
+				{
+					if (inventory[i].empty())
+					{
+						inventory[i] = "Heal Potion - heals 2 HP";
+						break;
+					}
+				}
+			}
+			endFight = 2;
+		}
+		Sleep(5000);
 	} while (endFight == 0);
 
 	return endFight;
@@ -136,4 +236,13 @@ bool Hero::nearEnemy(string field,int fieldSize,char enemyTexture, int* fn, int*
 		if (field[((fieldSize * 2 + 1) * (y_pos + fn[i])) + x_pos + sn[i]] == enemyTexture) return true;
 	}
 	return false;
+}
+
+void Hero::showInventory()
+{
+	for (int i = 0; i < inventoryMaxSlots; i++)
+	{
+		if (inventory[i].empty()) cout <<'\t'<< i + 1 << ". " << "empty slot" << endl;
+		else cout << '\t'<<i+1 << ". " << inventory[i] << endl;
+	}
 }
